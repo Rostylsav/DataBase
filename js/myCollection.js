@@ -1,4 +1,4 @@
-define(['logic'], function(reqRes) {
+define(['js/logic'], function(logic) {
 
     /**
     * Creates object MyCollection.
@@ -20,7 +20,7 @@ define(['logic'], function(reqRes) {
         */    
         this.load = function(callback){
             var that = this;
-            reqRes(that.url, function(text){ 
+            logic.reqRes(that.url, function(text){ 
                 that.collection = JSON.parse(text); 
                 callback(JSON.parse(text));
             });
@@ -34,7 +34,7 @@ define(['logic'], function(reqRes) {
         */  
         this.create = function( obj, callback, errorCallback ) {
             var that = this;
-            reqRes(
+            logic.reqRes(
                 that.url,
                 function(data){ 
                     that.collection.push(JSON.parse(data));
@@ -70,7 +70,7 @@ define(['logic'], function(reqRes) {
         */ 
         this.update = function( obj, callback, errorCallback ) {
             var that = this;
-            reqRes(
+            logic.reqRes(
                 that.url,
                 function(newData){ 
                     var data = JSON.parse(newData);
@@ -107,7 +107,7 @@ define(['logic'], function(reqRes) {
         */
         this.remove = function ( obj, callback, errorCallback ){
             var that = this;
-            reqRes(
+            logic.reqRes(
                 that.url,
                 function(){
                     that.deleteInColection(obj.id);

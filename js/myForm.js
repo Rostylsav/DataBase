@@ -1,4 +1,5 @@
-define(['logic'], function(logic){
+define(['js/logic', 'jquery'], 
+    function( logic ){
 
     /**
     * Creates object MyForm.
@@ -15,7 +16,6 @@ define(['logic'], function(logic){
         */
         this.templateForm = tString;
         this.obj = obj;
-
         this.form = logic.template(this.templateForm, this.obj);
 
         /**

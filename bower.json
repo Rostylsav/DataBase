@@ -1,0 +1,21 @@
+{
+   "name": "DataBaseFork",
+  "version": "0.0.0",
+  "homepage": "index.html",
+  "authors": "Rostyslav Paslavskyy <pas.ros.bor@gmail.com>",
+  "license": "MIT",
+   "private": true,
+   "ignore": [
+     "**/.*",
+     "node_modules",
+    "bower_components",
+     "test",
+     "tests"
+   ],
+  "dependencies": {
+     "jquery": "~2.1.0",
+     "jquery-validate": "~1.12.0",
+     "bootstrap" : "~3.1.1",
+     "requirejs" : "~2.1.11"
+   }
+ }

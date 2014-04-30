@@ -1,5 +1,5 @@
-define(['myForm', 'MyCollection', 'templateOfDOM'], 
-    function ( MyCollection, MyForm,  tActionButtons, tColumOfTable, tFirstRow, tAlertForm, tConfirmForm, tNewForm, tLoginForm){
+require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery', 'jquery.validate'], 
+    function ( MyForm, MyCollection, templates, logic){
 
     var collectionOfUser, userId, form, addForm, updateForm, confirmForm, warningForm, loginForm, registrationForm;
 
@@ -25,7 +25,7 @@ define(['myForm', 'MyCollection', 'templateOfDOM'],
     * Set him function for create new user, update selected user, delete selected user
     */
     function createActionButtons(){
-        var actionButtons = template(tActionButtons);
+        var actionButtons = logic.template(templates.tActionButtons);
         $('#actionButtons').append(actionButtons);
         $('#addUser').on('click', function(){
             if(!addForm.form.find('button').length){
@@ -76,7 +76,7 @@ define(['myForm', 'MyCollection', 'templateOfDOM'],
         var row = $('<tr></tr>').attr({
             'data-id' : obj.id
         });
-        var colums = template(tColumOfTable, obj);
+        var colums = logic.template(templates.tColumOfTable, obj);
         row.append(colums);
         row.on('click', select);
         return row;
@@ -91,7 +91,7 @@ define(['myForm', 'MyCollection', 'templateOfDOM'],
             'id' : 'db',
             'class' : 'table'
         });
-        table.append(template(tFirstRow));
+        table.append(logic.template(templates.tFirstRow));
 
         for (var i = 0; i<array.length; i++){
             var row = createNewRow(array[i]);
@@ -110,7 +110,6 @@ define(['myForm', 'MyCollection', 'templateOfDOM'],
             var user = addForm.getValueForm();
             console.log(user);
             user.logIN = false;
-            console.log(user);
             e.preventDefault();
             collectionOfUser.create(
                 user,
@@ -155,7 +154,7 @@ define(['myForm', 'MyCollection', 'templateOfDOM'],
             collectionOfUser.update(
                 user,
                 function(newUser){
-                    $('tr[data-id='+userId +']').html('').html(template(tColumOfTable, newUser))
+                    $('tr[data-id='+userId +']').html('').html(logic.template(templates.tColumOfTable, newUser))
                     $('tr[data-id='+userId +']').on('click', select);
                     updateForm.hide();
                 },
@@ -496,16 +495,16 @@ define(['myForm', 'MyCollection', 'templateOfDOM'],
     */
     $(function(){
 
-        
+
         collectionOfUser = new MyCollection('http://localhost:3000/user');
         loginAndPassword = new MyCollection('http://localhost:3000/loginAndPassword');
 
-        addForm = new MyForm( tNewForm );
-        registrationForm = new MyForm( tNewForm );
-        updateForm = new MyForm( tNewForm );
-        confirmForm = new MyForm( tConfirmForm );
-        warningForm = new MyForm( tAlertForm );
-        loginForm = new MyForm( tLoginForm );
+        addForm = new MyForm( templates.tNewForm );
+        registrationForm = new MyForm( templates.tNewForm );
+        updateForm = new MyForm( templates.tNewForm );
+        confirmForm = new MyForm( templates.tConfirmForm );
+        warningForm = new MyForm( templates.tAlertForm );
+        loginForm = new MyForm( templates.tLoginForm );
         $('#loggedOut').css('background', '#ADD8E6');
         $('#login').on('click', function(){
                 if(!loginForm.form.find('button').length){

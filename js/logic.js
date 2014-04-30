@@ -1,4 +1,4 @@
-define(function ()
+define(['jquery'], function ()
 {
     /**
     * Creates a request to the server
