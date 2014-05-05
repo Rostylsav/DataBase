@@ -55,7 +55,7 @@ define(['js/logic'], function(logic) {
         this.changeInCollection = function( obj) {
             for( var i = 0 ; i < this.collection.length; i++)
             { 
-                if(this.collection[i].id === obj.id)
+                if(parseInt(this.collection[i].id) === parseInt(obj.id))
                 {
                     this.collection[i] = obj;
                 }
@@ -110,7 +110,7 @@ define(['js/logic'], function(logic) {
             logic.reqRes(
                 that.url,
                 function(){
-                    that.deleteInColection(obj.id);
+                    that.deleteInColection(parseInt(obj.id));
                     callback();
                 },
                 errorCallback,

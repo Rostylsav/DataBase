@@ -22,6 +22,28 @@ var express = require('express'),
             skype : 'S-a-c-h-o-k1',
             email : 'pas.ros.bor@gmail.com',
             logIN : false,
+            tasks : [
+                {
+                    "id": 1,
+                    "task": "qweqwe",
+                    "status": false
+                },
+                {
+                    "id": 2,
+                    "task": "qweqwe",
+                    "status": false
+                },
+                {
+                    "id": 3,
+                    "task": "werwer",
+                    "status": false
+                },
+                {
+                    "id": 4,
+                    "task": "ertert",
+                    "status": false
+                }
+            ]
         },
         function(){}
       );
@@ -36,6 +58,28 @@ var express = require('express'),
             skype : 'IgorKo',
             email : 'IGOR@gmail.com',
             logIN : false,
+            tasks : [
+                {
+                    "id": 1,
+                    "task": "123",
+                    "status": false
+                },
+                {
+                    "id": 2,
+                    "task": "321",
+                    "status": false
+                },
+                {
+                    "id": 3,
+                    "task": "234",
+                    "status": false
+                },
+                {
+                    "id": 4,
+                    "task": "234235345",
+                    "status": false
+                }
+            ]
         },
         function(){}
       );

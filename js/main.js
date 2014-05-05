@@ -1,7 +1,9 @@
 require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery', 'jquery.validate'], 
     function ( MyForm, MyCollection, templates, logic){
 
-    var collectionOfUser, userId, form, addForm, updateForm, confirmForm, warningForm, loginForm, registrationForm;
+    var collectionOfUser, userId, form, addForm, updateForm, 
+        confirmForm, warningForm, loginForm, registrationForm,
+        taskToDo = 0, activeUser, elementId;
 
     /**
     * Called in case of error during request to the server.
@@ -108,8 +110,8 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
         var val = addForm.form.find('#myForm').valid();
         if(val){
             var user = addForm.getValueForm();
-            console.log(user);
             user.logIN = false;
+            user.tasks = [];
             e.preventDefault();
             collectionOfUser.create(
                 user,
@@ -132,6 +134,7 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
         if(val){
             var user = registrationForm.getValueForm();
             user.logIN = false;
+            user.tasks = [];
             e.preventDefault();
             collectionOfUser.create(
                 user,
@@ -199,12 +202,14 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
         $('#onSite').remove();
         $('#actionButtons').html('');
         $('#dbOfUser').html('');
+        $('#conteinerForDisply').html('');
     }
 
     /**
     * checking if login and password is exist and do some action
     */
     function checkPassword(e){
+        collectionOfTask = [];
         logout();
         e.preventDefault();
         loginForm.form.find('label[class = "error"]').remove();
@@ -217,6 +222,8 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
                 password : password,
             },
             function (user){
+                taskToDo = 0;
+                $('#conteinerForDisply').append(logic.template(templates.tContainerTask));
                 $('#loggedOut').on('click', logout);
                 $('#loggedOut').removeAttr('style');
                 var userIdForUpdate;
@@ -228,20 +235,29 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
                 $('body').append(onSite);
 
                 if( user.length > 0 ){
+                    activeUser = user[0];
                     userIdForUpdate = user[0].id;
                     user[0].logIN = true;
                     $('#onSite').text('Welcome,' + user[0].name + ' on our site');
-                       createTable(user);
+                    createTable(user);
                 }
                 else{
+                    activeUser = user;
                     userIdForUpdate = user.id;
                     user.logIN = true;
-                $('#onSite').text('Welcome,' + user.name + ' on our site');
+                    $('#onSite').text('Welcome,' + user.name + ' on our site');
                     $('#addUser').remove();
                     $('#delUser').remove();
                     createTable([]);
                     $('#db').append( createNewRow(user) ); 
                 }
+
+
+
+                $('#enterTask').on('keypress',createTask);
+                $('#checkAll').on('click', checkAllTask);
+                showAllTasks(activeUser.tasks);
+                console.log(activeUser);
 
                 collectionOfUser.update(
                     {
@@ -489,7 +505,204 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
         );
         validation(loginForm.form);
     }
+ 
 
+
+
+
+
+    function displayTask(task){
+        var container= $('#containerShowTask');
+        if($('#task' + task.id).length){
+            var containerOfOneTask = $('#task' + task.id);
+        }
+        else{
+            var containerOfOneTask = $('<div>').attr({
+                'id' : 'task'+ task.id,
+                'class' : 'containerOfOneTask' 
+            });
+        }
+        task.statusClass = task.status ? 'checkedTask' : 'showValueOfTask';
+        task.checked = task.status ? 'checked = "checked"' : '';
+        var components = logic.template( templates.templateTask, task);
+        components.find('input').on("click", markTask);
+        components.find('button').on('click',deleteTask);
+
+        containerOfOneTask.append(components);
+        if(!($('#task' + task.id).length)){
+            container.append(containerOfOneTask);
+            containerOfOneTask.hide();
+            containerOfOneTask.show(500);
+        }
+        $('#enterTask').val('');
+    }
+
+   function displayBottomContainer(){
+        var container = $('#bottomContainer');
+        container.html('');
+        var bottomContainer = logic.template(templates.templateBottomContainer, {taskToDo:taskToDo});
+        container.append(bottomContainer);
+        $('#active').on('click', filter);
+        $('#completed').on('click', filter);
+        $('#all').on('click', filter);
+    }
+
+    /**
+    * Shows all task
+    * @param {Array} array. collection of task for display.
+    */ 
+    function showAllTasks(array){
+        $('#containerShowTask').text('');
+        taskToDo = 0;
+        for( var i = 0 ; i < array.length ; i++){
+            displayTask(array[i]);
+            if(array[i].status == false){
+                taskToDo++;
+            } 
+        }
+        displayBottomContainer();
+    }
+
+    /**
+    * Creates a new task.
+    * @param {Event} e.
+    */ 
+    function createTask(e){
+        var taskName = $('#enterTask').val();
+        if (e.keyCode === 13){
+            if( taskName != ''){
+                taskToDo++;
+                $('#countOfTask').text('').text('Task to do: '+ taskToDo);
+                if(activeUser.tasks[0]){
+                    activeUser.tasks.push({id : (activeUser.tasks[activeUser.tasks.length - 1].id + 1), task : taskName, status : false});
+                    displayTask(activeUser.tasks[activeUser.tasks.length-1]);
+                }
+                else{
+                    activeUser.tasks.push({id : 0, task : taskName, status : false});
+                    displayTask(activeUser.tasks[0]);
+                }
+                collectionOfUser.update(
+                    {
+                        id : activeUser.id,
+                        tasks : activeUser.tasks
+                    },
+                    function(user){
+                        activeUser = user;
+                    },
+                    error   
+                );
+            }
+            else{
+                console.log('Error. task is not enter');
+            }
+        }
+    }
+
+
+    function markTask(e){
+        var status = false;
+
+        if(e.target.checked){
+            status = true;
+            taskToDo --;
+            $('#countOfTask').text('').text('Task to do: '+ taskToDo);
+        }
+        else{
+            taskToDo ++;
+            $('#countOfTask').text('').text('Task to do: '+ taskToDo);
+        }
+        for (var i = 0 ; i< activeUser.tasks.length; i ++){
+            if(parseInt(activeUser.tasks[i].id) === parseInt(e.target.getAttribute('data-id'))){
+                activeUser.tasks[i].status = status;
+                $('#components' + e.target.getAttribute('data-id')).remove();
+                displayTask(activeUser.tasks[i]);
+                collectionOfUser.update(
+                    {
+                        id : activeUser.id,
+                        tasks : activeUser.tasks
+                    },
+                    function(user){
+                        activeUser = user;
+                    },
+                    error   
+                );
+            }
+        }
+
+    }
+
+    function deleteTask (e){
+        for (var i = 0 ; i< activeUser.tasks.length; i ++){
+            if(parseInt(activeUser.tasks[i].id) === parseInt(e.target.getAttribute('data-id'))){
+                if(activeUser.tasks[i].status === false){
+                    taskToDo--;
+                    $('#countOfTask').text('').text('Task to do: '+ taskToDo);
+                }
+                activeUser.tasks.splice(i, 1);
+                $('#task' + e.target.getAttribute('data-id')).remove();
+                collectionOfUser.update(
+                    {
+                        id : activeUser.id,
+                        tasks : activeUser.tasks
+                    },
+                    function(user){
+                        activeUser = user;
+                    },
+                    error   
+                );
+            }
+        }
+    }
+
+    function checkAllTask(e){
+
+        var status = false;
+        if(e.target.checked){
+            status = true;
+        }
+
+        for(var i = 0 ; i < activeUser.tasks.length; i++){
+            activeUser.tasks[i].status = status;
+        }
+        collectionOfUser.update(
+            {
+                id : activeUser.id,
+                tasks : activeUser.tasks
+            },
+            function(user){
+                activeUser = user;
+                $('#containerShowTask').html('');
+                showAllTasks(activeUser.tasks);
+            },
+            error   
+        );
+    }
+
+    function filter(e){
+        var arrayactive = [], arraycompleted = [];
+        for (var i = 0; i< activeUser.tasks.length; i++){
+            if(activeUser.tasks[i].status === false){
+                arrayactive.push(activeUser.tasks[i]);
+            }
+            else{
+                arraycompleted.push(activeUser.tasks[i]);
+            }
+        }
+        if(e.target.id === 'active'){
+            showAllTasks(arrayactive);
+        }
+        else{
+            if(e.target.id === 'completed'){
+                showAllTasks(arraycompleted);
+            }
+            else{
+                showAllTasks(activeUser.tasks);
+            }
+        }
+    }
+
+
+    
     /**
     * set forms and display date from server
     */
@@ -498,6 +711,7 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
 
         collectionOfUser = new MyCollection('http://localhost:3000/user');
         loginAndPassword = new MyCollection('http://localhost:3000/loginAndPassword');
+        
 
         addForm = new MyForm( templates.tNewForm );
         registrationForm = new MyForm( templates.tNewForm );
@@ -505,6 +719,7 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
         confirmForm = new MyForm( templates.tConfirmForm );
         warningForm = new MyForm( templates.tAlertForm );
         loginForm = new MyForm( templates.tLoginForm );
+
         $('#loggedOut').css('background', '#ADD8E6');
         $('#login').on('click', function(){
                 if(!loginForm.form.find('button').length){
@@ -519,15 +734,20 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
             }
             registrationForm.show(300);
         });  
-        console.log('work');
         collectionOfUser.load(
             function(data){
                 for(var i = 0; i<data.length; i++){
                     if(data[i].logIN){
+                        activeUser = data[i];
+                        $('#conteinerForDisply').append(logic.template(templates.tContainerTask));
                         $('#loggedOut').on('click', logout);
                         $('#loggedOut').removeAttr('style');
                         createActionButtons();
+                        $('#enterTask').on('keypress',createTask);
+                        $('#checkAll').on('click', checkAllTask);
+                        showAllTasks(activeUser.tasks);
                         $('#onSite').text('Welcome,' + data[i].name + ' on our site');
+
                         if(data[i].login === 'admin'){
                             createTable(data);
                         }

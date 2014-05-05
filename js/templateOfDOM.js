@@ -95,7 +95,35 @@ var tActionButtons = '<button id="addUser"  class="btn btn-primary">Add new User
                                 '<input class = "form-control" id = "password" type = "password"  name = "password"></input>' + 
 
                             '</form>'+
-                        '</div>';
+                        '</div>',
+
+        templateTask = '<div id="components{{id}}" class="containerOfOneTask">'+
+                            '<input class="checkbox" type="checkbox" data-id="{{id}}" {{checked}}></input>'+
+                            '<div class="{{statusClass}}" data-id="{{id}}">'+
+                                '{{task}}'+
+                            '</div>'+
+                            '<button class="button" data-id="{{id}}">R</button>'+
+                        '</div>',
+
+        templateBottomContainer =   '<div id="countOfTask" class="countOfTask">'+
+                                        'Task to do: {{taskToDo}}'+        
+                                    '</div>'+
+                                    '<button id="all" class="buttomFilter">All</button>'+
+                                    '<button id="active" class="buttomFilter">Active</button>'+
+                                    '<button id="completed" class="buttomFilter">Completed</button>',
+
+        templateFormForChange = '<div id="parentForm" class = "parentForm"></div>'+
+                                '<div id="form" class = "form">'+
+                                    '<input class="input" type="text"></input>'+
+                                    '<button id="buttonEnter" class="showValue">Change</button>'+
+                                    '<button id="buttonEsc" class="showValue">Close</button>'+
+                                '</div>',
+        tContainerTask = '<div id="conteinerForEnterTask">'+
+                            '<input id="checkAll" class="checkbox" type="checkbox"></input>'+
+                            '<input id="enterTask" type="text" autofocus="" placeholder="What needs to be done?" name="task"></input>'+
+                        '</div>'+
+                        '<div id="containerShowTask"></div>'+
+                        '<div id="bottomContainer" class="containerOfOneTask"></div>';
 
     return {
         tActionButtons : tActionButtons,
@@ -104,6 +132,10 @@ var tActionButtons = '<button id="addUser"  class="btn btn-primary">Add new User
         tAlertForm : tAlertForm,
         tConfirmForm : tConfirmForm,
         tNewForm : tNewForm,
-        tLoginForm : tLoginForm
+        tLoginForm : tLoginForm,
+        templateTask : templateTask,
+        templateBottomContainer : templateBottomContainer,
+        templateFormForChange : templateFormForChange,
+        tContainerTask : tContainerTask,
     }
 });
