@@ -4,8 +4,12 @@ define(function(){
 */
 var tActionButtons = '<button id="addUser"  class="btn btn-primary">Add new User</button>'+
                          '<button id="editUser" class="btn btn-primary">Edit User</button>'+
-                         '<button id="delUser" class="btn btn-primary">Delete User</button>',
+                         '<button id="delUser" class="btn btn-primary">Delete User</button>'+
+                         '<button id="tasksButton" class="btn btn-primary">Show Tasks </button>',
 
+    tEditButton = '<button id="editUser" class="btn btn-primary">Edit User</button>',
+
+    tTasksButton = '<button id="tasksButton" class="btn btn-primary">Show Tasks </button>',
 /**
 * templaet for create colums with date in row of table
 */
@@ -38,14 +42,7 @@ var tActionButtons = '<button id="addUser"  class="btn btn-primary">Add new User
         tAlertForm ='<div id="parentAlertForm" class = "parentForm"></div>'+
                         '<div id="alertForm" class = "form">'+
                             '<div>Please select a user from the list<br></div>'+
-                        '</div>',
-
-/**
-* templaet for create confirm form
-*/
-        tConfirmForm = '<div id="confirmParentForm" class = "parentForm"></div>'+
-                        '<div id="confirmForm" class = "form">'+
-                            '<div> You really want to remove this user from the list?<br></div>'+
+                            '<button id="ok" class="btn btn-primary">Ok</button>'+
                         '</div>',
 
 /**
@@ -112,30 +109,32 @@ var tActionButtons = '<button id="addUser"  class="btn btn-primary">Add new User
                                     '<button id="active" class="buttomFilter">Active</button>'+
                                     '<button id="completed" class="buttomFilter">Completed</button>',
 
-        templateFormForChange = '<div id="parentForm" class = "parentForm"></div>'+
-                                '<div id="form" class = "form">'+
-                                    '<input class="input" type="text"></input>'+
-                                    '<button id="buttonEnter" class="showValue">Change</button>'+
-                                    '<button id="buttonEsc" class="showValue">Close</button>'+
-                                '</div>',
-        tContainerTask = '<div id="conteinerForEnterTask">'+
-                            '<input id="checkAll" class="checkbox" type="checkbox"></input>'+
-                            '<input id="enterTask" type="text" autofocus="" placeholder="What needs to be done?" name="task"></input>'+
-                        '</div>'+
-                        '<div id="containerShowTask"></div>'+
-                        '<div id="bottomContainer" class="containerOfOneTask"></div>';
+        tContainerTask ='<div id = "tasksWindow">'+ 
+                            '<div id = "parentForm" class = "parentForm"></div>'+
+                            '<div class = "tasksWindow">'+
+                                '<div id = "conteinerForDisply">'+
+                                    '<div id="conteinerForEnterTask">'+
+                                        '<input id="checkAll" class="checkbox" type="checkbox"></input>'+
+                                        '<input id="enterTask" type="text" autofocus="" placeholder="What needs to be done?" name="task"></input>'+
+                                    '</div>'+
+                                    '<div id="containerShowTask"></div>'+
+                                    '<div id="bottomContainer" class="containerOfOneTask"></div>'+
+                                    '<button id="close" class="btn btn-primary">Close</button>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>';
 
     return {
         tActionButtons : tActionButtons,
         tColumOfTable : tColumOfTable,
         tFirstRow : tFirstRow,
         tAlertForm : tAlertForm,
-        tConfirmForm : tConfirmForm,
         tNewForm : tNewForm,
         tLoginForm : tLoginForm,
         templateTask : templateTask,
         templateBottomContainer : templateBottomContainer,
-        templateFormForChange : templateFormForChange,
         tContainerTask : tContainerTask,
+        tEditButton : tEditButton,
+        tTasksButton: tTasksButton,
     }
 });

@@ -150,6 +150,15 @@ server.post('/loginAndPassword', function (req, res, next){
     }
 )
 
+server.post('/islogin', function (req, res, next){
+        userSave.find(req.params, function (error, users){
+            if(users && users.length > 0){
+                    res.send(users[0]);
+            }
+        });
+    }
+)
+
 /**
 * Updata status of  user by id
 */

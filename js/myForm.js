@@ -6,8 +6,9 @@ define(['js/logic', 'jquery'],
     * @constructor
     * @property {String} tString. Tamplate of form in form of string.
     * @property {Object} obj. Object which contains property for create form.
+    * @property {Array} propertyOfButtons. Collection of object which contain property for creating buttons in form.
     */
-    function MyForm(tString, obj)
+    function MyForm(tString,  propertyOfButtons, obj)
     {
         /**
         * @property {String} templateForm. Tamplate of form in form of string.
@@ -16,27 +17,26 @@ define(['js/logic', 'jquery'],
         */
         this.templateForm = tString;
         this.obj = obj;
-        this.form = logic.template(this.templateForm, this.obj);
+        this.buttons = propertyOfButtons;
 
-        /**
-        * Add buttons tp form with listeners. 
-        * @param {Array} arrayButton. It contains properties for create buttons.
-        * {id, class, name, action}
-        * @param {DOM object} placeForButton. Place for add buttons.
-        */ 
-        this.addButtons = function(arrayButton, placeForButton){
-            var that = this;
-            arrayButton.forEach(function(elem){
+
+        this.createForm = function(){
+            var that = this,
+                form = logic.template(that.templateForm, that.obj);
+            this.buttons.forEach(function(elem){
                 var button = $('<button></button>').attr({
                     'id' : elem.id,
                     'class' : elem.class
                 });
                 button.text(elem.name);
                 button.on('click', elem.action);
-                placeForButton.append(button);
+                form.find('form').append(button);
             });
+            $('body').append(form);
+            return form;
         }
 
+        this.form = this.createForm();
         /**
         * Shows form in browser 
         * @param {Number} speed. Speed for display.
@@ -54,19 +54,6 @@ define(['js/logic', 'jquery'],
         this.hide = function(){
             this.form.hide();
             this.form.find('input').val('');
-        }
-
-        /**
-        * Append form with buttons in html element 
-        * @param {DOM Object} inElement. element that contains a form
-        * @param {Array} arrayButton. It contains properties for create buttons.
-        * {id, class, name, action}
-        * @param {DOM object} placeForButton. Place for add buttons.
-        */ 
-        this.appendForm = function(inElement, arrayButton, placeForButton){
-            inElement.append(this.form);
-            this.hide();
-            this.addButtons(arrayButton, this.form.find(placeForButton));
         }
 
         /**
@@ -93,6 +80,7 @@ define(['js/logic', 'jquery'],
             }
         }
     }
+
     return MyForm ;
 });
 

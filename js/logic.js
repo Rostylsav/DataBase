@@ -18,9 +18,7 @@ define(['jquery'], function ()
         xhr.open(method, url, true);
         if(options.data)
         {
-           
-                xhr.setRequestHeader('Content-Type', 'application/json');
-            
+            xhr.setRequestHeader('Content-Type', 'application/json');
             data = options.data;
         }
         xhr.onreadystatechange = function() {             
