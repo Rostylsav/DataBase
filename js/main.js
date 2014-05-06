@@ -252,7 +252,10 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
     function checkPassword(e){
         var userName = loginForm.form.find('input[name="login"]').val(),
             password = loginForm.form.find('input[name="password"]').val();
-            logout();
+            if(loginUser){
+                logout();
+            }
+
         e.preventDefault();
         loginForm.form.find('label[class = "error"]').remove();
         logic.reqRes(
@@ -411,6 +414,9 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
         validation(updateForm.form);
     }
 
+    /**
+    * Create login form
+    */
     function createLoginForm(){
         loginForm = new MyForm( 
             templates.tLoginForm, 
@@ -452,6 +458,9 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
     }
 
 
+    /**
+    * Create window for display list of tasks
+    */
     function createTasksWindow(){
         tasksWindow = logic.template(templates.tContainerTask);
         $('body').append(tasksWindow);
@@ -463,7 +472,10 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
         showAllTasks( loginUser.tasks);
     } 
 
-
+    /**
+    * display task
+    * @param{Object} task. Object wtich contain id , name and status of task.
+    */
     function displayTask(task){
         var container= $('#containerShowTask');
         if($('#task' + task.id).length){
@@ -490,6 +502,9 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
         $('#enterTask').val('');
     }
 
+    /**
+    * Display buttons for filter list of task
+    */
    function displayBottomContainer(){
         var container = $('#bottomContainer');
         container.html('');
@@ -551,7 +566,9 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
         }
     }
 
-
+    /**
+    * mark task change style and his status
+    */
     function markTask(e){
         var status = false;
 
@@ -581,9 +598,11 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
                 );
             }
         }
-
     }
 
+    /**
+    * Delete task from the list and collection
+    */
     function deleteTask (e){
         for (var i = 0 ; i< loginUser.tasks.length; i ++){
             if(parseInt(loginUser.tasks[i].id) === parseInt(e.target.getAttribute('data-id'))){
@@ -607,6 +626,9 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
         }
     }
 
+    /**
+    * mark all tasks and chage style and status
+    */
     function checkAllTask(e){
 
         var status = false;
@@ -631,6 +653,9 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
         );
     }
 
+    /**
+    * display list of active or completed or all tasks
+    */
     function filter(e){
         var arrayactive = [], arraycompleted = [];
         for (var i = 0; i< loginUser.tasks.length; i++){
@@ -654,6 +679,10 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
         }
     }
 
+    /**
+    * Display buttons and data of user and give him status "login".
+    * @param {Object} user. Data for display.
+    */
     function displayData(user){
         $('#loggedOut').on('click', logout);
 
@@ -678,9 +707,6 @@ require(['js/myForm', 'js/MyCollection', 'js/templateOfDOM', 'js/logic', 'jquery
             $('#db').append(createNewRow(user));
         }
     }
-
-
-
     
     /**
     * set forms and display date from server
