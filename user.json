@@ -1,0 +1,167 @@
+[
+  {
+    "name": "Rostyslav Paslavskyy",
+    "login": "admin",
+    "password": "admin",
+    "workPlace": "SoftServe",
+    "addres": "Lviv ",
+    "tel": "0992363934",
+    "skype": "S-a-c-h-o-k1",
+    "email": "pas.ros.bor@gmail.com",
+    "logIN": true,
+    "tasks": [
+      {
+        "id": 1,
+        "task": "qweqwe",
+        "status": false,
+        "statusClass": "showValueOfTask",
+        "checked": ""
+      },
+      {
+        "id": 3,
+        "task": "werwer",
+        "status": true,
+        "statusClass": "checkedTask",
+        "checked": "checked = \"checked\""
+      },
+      {
+        "id": 4,
+        "task": "ertert",
+        "status": true,
+        "statusClass": "checkedTask",
+        "checked": "checked = \"checked\""
+      }
+    ],
+    "id": 1
+  },
+  {
+    "name": "Igor Paslavskyy",
+    "login": "IgorKo",
+    "password": "igor123",
+    "workPlace": "SoftServe",
+    "addres": "Lviv ",
+    "tel": "0509984827",
+    "skype": "IgorKo",
+    "email": "IGOR@gmail.com",
+    "logIN": false,
+    "tasks": [
+      {
+        "id": 1,
+        "task": "123",
+        "status": true,
+        "statusClass": "checkedTask",
+        "checked": "checked = \"checked\""
+      },
+      {
+        "id": 2,
+        "task": "321",
+        "status": true,
+        "statusClass": "checkedTask",
+        "checked": "checked = \"checked\""
+      },
+      {
+        "id": 8,
+        "task": "234",
+        "status": false,
+        "statusClass": "showValueOfTask",
+        "checked": ""
+      },
+      {
+        "id": 9,
+        "task": "345",
+        "status": false,
+        "statusClass": "showValueOfTask",
+        "checked": ""
+      },
+      {
+        "id": 10,
+        "task": "456",
+        "status": false,
+        "statusClass": "showValueOfTask",
+        "checked": ""
+      }
+    ],
+    "id": 2
+  },
+  {
+    "name": "iopipoipoipo",
+    "login": "werwqr",
+    "password": "123123",
+    "workPlace": "",
+    "addres": "",
+    "tel": "233",
+    "skype": "",
+    "email": "pas.ros.bor@gmail.com",
+    "logIN": false,
+    "tasks": [],
+    "id": "5"
+  },
+  {
+    "name": "Rostyslav Paslavskyy",
+    "login": "admin",
+    "password": "admin",
+    "workPlace": "SoftServe",
+    "addres": "Lviv ",
+    "tel": "0992363934",
+    "skype": "S-a-c-h-o-k1",
+    "email": "pas.ros.bor@gmail.com",
+    "logIN": false,
+    "tasks": [
+      {
+        "id": 1,
+        "task": "qweqwe",
+        "status": false
+      },
+      {
+        "id": 2,
+        "task": "qweqwe",
+        "status": false
+      },
+      {
+        "id": 3,
+        "task": "werwer",
+        "status": false
+      },
+      {
+        "id": 4,
+        "task": "ertert",
+        "status": false
+      }
+    ],
+    "id": 6
+  },
+  {
+    "name": "Igor Paslavskyy",
+    "login": "IgorKo",
+    "password": "igor123",
+    "workPlace": "SoftServe",
+    "addres": "Lviv ",
+    "tel": "0509984827",
+    "skype": "IgorKo",
+    "email": "IGOR@gmail.com",
+    "logIN": false,
+    "tasks": [
+      {
+        "id": 1,
+        "task": "123",
+        "status": false
+      },
+      {
+        "id": 2,
+        "task": "321",
+        "status": false
+      },
+      {
+        "id": 3,
+        "task": "234",
+        "status": false
+      },
+      {
+        "id": 4,
+        "task": "234235345",
+        "status": false
+      }
+    ],
+    "id": 7
+  }
+]

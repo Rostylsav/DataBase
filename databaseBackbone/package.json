@@ -1,0 +1,12 @@
+{ 
+    "name": "ToDo",
+    "version": "0.0.1",
+    "description": "",
+    "main": "index.html",
+    "author": "Rostyslav Paslavskyy <pas.ros.bor@gmail.com>",
+    "license": "",
+    "dependencies":  { },
+    "devDependencies": {
+        "bower": "^1.3.3"
+    }
+}
