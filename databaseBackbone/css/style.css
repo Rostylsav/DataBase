@@ -3,74 +3,8 @@ body {
 	margin: 0;
 	padding: 0;
 }
-
-body {
-	background: #eeeeee;
-	color: #333333;
-	width: 520px;
-	margin: 0 auto;
-
-}
-
-
-#chackAll{
-	float: left;
-	margin: 10px 20px;
-	margin-left: 5px;
-}
-#containerForTodo {
-	background: #fff;
-	padding: 20px;
-	margin-bottom: 40px;
-}
-
-
-#containerForTodo input[type="text"] {
+#containerForUsers{
 	width: 400px;
-	font-size: 24px;
-	padding: 6px;
-	border: 1px solid #999999;
+	margin: 0 auto;
 }
 
-#containerForTasks {
-	display: none;
-}
-
-#listOfTasks {
-	margin: 10px 0;
-	padding: 0;
-	list-style: none;
-}
-
-#listOfTasks div {
-	padding: 10px 20px 10px 0;
-	position: relative;
-	font-size: 24px;
-	border-bottom: 1px solid #cccccc;
-}
-
-#listOfTasks div.done label {
-	color: red;
-	text-decoration: line-through;
-}
-
-#listOfTasks .destroy {
-	position: absolute;
-	right: 13px;
-	top: 20px;
-	display: none;
-	cursor: pointer;
-}
-
-#listOfTasks div:hover .destroy {
-  	display: block;
-}
-
-#listOfTasks .destroy:hover {
-  	background-position: 0 -20px;
-}
-
-#countOfTasks{
-	float: left;
-	margin-right: 30px;
-}

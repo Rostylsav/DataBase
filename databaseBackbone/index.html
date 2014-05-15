@@ -2,6 +2,8 @@
     <head>
         <title>Users with Backbone</title>
         <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8"/>
+
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel = "stylesheet" href = "css/style.css">
 
         <script src = "bower_components/requirejs/require.js"></script>
@@ -11,23 +13,26 @@
     
     <body>
     <div id = 'containerForUsers'>
-        <form id = 'myForm'>
-            <label>Name</label>
-            <input type = 'text' name = 'name'></input><br>
-            <label>Age</label>
-            <input type = 'text' name = 'age'></input><br>
-            <label>Email</label>
-            <input type = 'text' name = 'email'></input><br>
-            <button id = 'addUser'>Create user</button>
-        </form>
-        <table id = 'users'></table>
+        <div id = "containerForm"></div>
+        <button id = "addUser" class = 'btn btn-primary'> Add user </button>
+        <table id = 'users' class = 'table'></table>
     </div>
         <script type = "text/template" id = "tableRow">
-                <td><%- name %></td>
-                <td><%- age %></td>
-                <td><%- email %></td>
-                //<td><button class = "destroy"> R </button></td>
-            </tr>
-      </script>
+            <td><%- name %></td>
+            <td><%- age %></td>
+            <td><%- email %></td>
+            <td><button id = 'destroy' class='btn btn-primary'> R </button></td>
+        </script>
+        <script type = "text/template" id = "myForm">
+            <form id = "form">
+                <label>Name</label>
+                <input type = 'text' name = 'name' class = 'form-control'></input><br>
+                <label>Age</label>
+                <input type = 'text' name = 'age' class = 'form-control'></input><br>
+                <label>Email</label>
+                <input type = 'text' name = 'email' class = 'form-control'></input><br>
+                <button id = 'createUser' class='btn btn-primary'>Create user</button>
+            </form>
+        </script>
     </body>
 </html>

@@ -14,18 +14,14 @@ require(['jquery', 'underscore', 'backbone','backbone.localStorage'],
             var ListOfUsers = Backbone.Collection.extend({
                 model : User,
                 localStorage : new Store("users"),
-                getByName : function(name){
-                    return this.filter(function(user){ return task.name === name; });
-                }
             });
-
             var users = new ListOfUsers;
 
-            var userDisplay = Backbone.View.extend({
+            var UserDisplay = Backbone.View.extend({
                 tagName:  "tr",
                 template: _.template($('#tableRow').html()),
                 events: {
-                    "click button.destroy" : "del"
+                    "click button#destroy" : "del"
                 },
                 initialize: function() {
                     this.model.bind('destroy', this.remove, this);
@@ -39,20 +35,20 @@ require(['jquery', 'underscore', 'backbone','backbone.localStorage'],
                 }
             });
 
-            var AppView = Backbone.View.extend({
-                el: $("#containerForUsers"),
+            var FormAddUser = Backbone.View.extend({
+                template : _.template($('#myForm').html()),
                 events: {
-                    "click #addUser":  "createUser",
+                    "click #createUser":  "createUser",
                 },
                 initialize: function() {
-                    users.bind('add', this.render, this);
-                    users.fetch();
+                    //users.bind('add', , this);
+                    this.render();
                 },
                 render: function(user) {
-                    var view = new userDisplay({model: user});
-                    this.$("#users").append(view.render().el);
+                   $('#containerForm').html(this.template);
                 },
                 createUser: function(e) {
+                    console.log('work good');
                     users.create(
                         {
                             name: $('input[name = name]').val(),
@@ -60,6 +56,24 @@ require(['jquery', 'underscore', 'backbone','backbone.localStorage'],
                             email: $('input[name = email]').val()
                         }
                     );
+                }
+            });
+
+            var AppView = Backbone.View.extend({
+                el: $("#containerForUsers"),
+                events : {
+                    "click #addUser"  : "showForm",
+                },
+                initialize: function() {
+                    users.bind('add', this.render, this);
+                    users.fetch();
+                },
+                render: function(user) {
+                    var view = new UserDisplay({model: user});
+                    this.$("#users").append(view.render().el);
+                },
+                showForm : function(){
+                    var form = new FormAddUser;
                 }
             });
         $(function(){
