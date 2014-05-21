@@ -13,26 +13,40 @@
     
     <body>
     <div id = 'containerForUsers'>
-        <div id = "containerForm"></div>
-        <button id = "addUser" class = 'btn btn-primary'> Add user </button>
+        <button id = "login" class = 'btn btn-primary'> Login  </button>
+        <button id = "logout" class = 'btn btn-primary'> logout </button>
+        <button id = "registration" class = 'btn btn-primary'> Registration </button>
         <table id = 'users' class = 'table'></table>
     </div>
         <script type = "text/template" id = "tableRow">
             <td><%- name %></td>
-            <td><%- age %></td>
+            <td><%- login %></td>
+            <td><%- password %></td>
             <td><%- email %></td>
-            <td><button id = 'destroy' class='btn btn-primary'> R </button></td>
         </script>
-        <script type = "text/template" id = "myForm">
-            <form id = "form">
-                <label>Name</label>
-                <input type = 'text' name = 'name' class = 'form-control'></input><br>
-                <label>Age</label>
-                <input type = 'text' name = 'age' class = 'form-control'></input><br>
-                <label>Email</label>
-                <input type = 'text' name = 'email' class = 'form-control'></input><br>
-                <button id = 'createUser' class='btn btn-primary'>Create user</button>
-            </form>
+        <script type = "text/template" id = "formRegist">
+            <div id = "parentForm" class = "parentForm"></div>
+            <div id = "form" class = "form">
+                <form id = "myForm">
+                    <label class = "nameOfRow">Your full name  </label>
+                    <input class = "form-control"  type="text" name = "name"></input>
+
+                    <label class = "nameOfRow">Your login : </label>
+                    <input class = "form-control" type = "text"  name = "login"></input>
+
+                    <label class = "nameOfRow">Your password : </label>
+                    <input class = "form-control" id = "password" type ="password"  name = "password"></input> 
+
+                    <label class = "nameOfRow">Repeat your password : </label>
+                    <input class = "form-control" type ="password" name = "c_password"></input>
+
+                    <label class = "nameOfRow">Your email : </label>
+                    <input class = "form-control" type="email" name = "email"></input>
+
+                    <button id = "createUser" class = 'btn btn-primary'> Create User </button>
+                    <button id = "cancel" class = 'btn btn-primary'> Cancel </button>
+                </form>
+            </div>
         </script>
     </body>
 </html>
