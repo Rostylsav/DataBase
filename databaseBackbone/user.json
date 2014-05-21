@@ -1,0 +1,70 @@
+[
+  {
+    "name": "Rostyslav Paslavskyy",
+    "login": "admin",
+    "password": "admin",
+    "email": "pas.ros.bor@gmail.com",
+    "logIN": false,
+    "tasks": [
+      {
+        "id": 1,
+        "task": "qweqwe",
+        "status": false
+      },
+      {
+        "id": 2,
+        "task": "qweqwe",
+        "status": false
+      },
+      {
+        "id": 3,
+        "task": "werwer",
+        "status": false
+      },
+      {
+        "id": 4,
+        "task": "ertert",
+        "status": false
+      }
+    ],
+    "id": 1
+  },
+  {
+    "name": "Igor Paslavskyy",
+    "login": "IgorKo",
+    "password": "igor123",
+    "email": "IGOR@gmail.com",
+    "logIN": false,
+    "tasks": [
+      {
+        "id": 1,
+        "task": "123",
+        "status": false
+      },
+      {
+        "id": 2,
+        "task": "321",
+        "status": false
+      },
+      {
+        "id": 3,
+        "task": "234",
+        "status": false
+      },
+      {
+        "id": 4,
+        "task": "234235345",
+        "status": false
+      }
+    ],
+    "id": 2
+  },
+  {
+    "name": "1",
+    "login": "1",
+    "password": "1",
+    "email": "123",
+    "tasks": [],
+    "id": 3
+  }
+]

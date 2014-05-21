@@ -14,15 +14,16 @@
     <body>
     <div id = 'containerForUsers'>
         <button id = "login" class = 'btn btn-primary'> Login  </button>
-        <button id = "logout" class = 'btn btn-primary'> logout </button>
+        <button id = "logout" class = 'btn btn-primary'> Logout </button>
         <button id = "registration" class = 'btn btn-primary'> Registration </button>
         <table id = 'users' class = 'table'></table>
+        <div id = "continerForm"></div>
     </div>
         <script type = "text/template" id = "tableRow">
             <td><%- name %></td>
             <td><%- login %></td>
-            <td><%- password %></td>
             <td><%- email %></td>
+            <td><button id = "showTasks" class = 'btn btn-primary' >Tasks</button></td>
         </script>
         <script type = "text/template" id = "formRegist">
             <div id = "parentForm" class = "parentForm"></div>
@@ -46,6 +47,42 @@
                     <button id = "createUser" class = 'btn btn-primary'> Create User </button>
                     <button id = "cancel" class = 'btn btn-primary'> Cancel </button>
                 </form>
+            </div>
+        </script>
+        <script type = "text/template" id = "formLogin">
+            <div id = "parentForm" class = "parentForm"></div>
+            <div id = "form" class = "form">
+                <form id = "myForm">
+                    <label class = "nameOfRow">Your login : </label>
+                    <input class = "form-control" type = "text"  name = "login"></input>
+
+                    <label class = "nameOfRow">Your password : </label>
+                    <input class = "form-control" id = "password" type ="password"  name = "password"></input> 
+
+                    <button id = "login" class = 'btn btn-primary'> Login </button>
+                    <button id = "cancel" class = 'btn btn-primary'> Cancel </button>
+                </form>
+            </div>
+        </script>
+        <script type = "text/template" id = "item-template">
+            <input class = "toggle" type = "checkbox" <%= done ? 'checked="checked"' : '' %> />
+            <label><%- title %></label>
+            <button class = "destroy"> R </button>
+        </script>
+        <script type = "text/template" id = "item-template">
+          <div id = "containerForTodo">
+                <input id = "chackAll" type = "checkbox">
+                <input id = "newTask" type = "text" placeholder = "What needs to do?">
+
+                <div id = "containerForTasks">
+                    <div id = "listOfTasks"></div>
+                    <div id = "buttons">
+                        <div id = 'countOfTasks'></div>
+                        <button id = 'all'> All </button>
+                        <button id = 'active'> Active </button>
+                        <button id = 'done'> Done </button>
+                    </div>
+                </div>
             </div>
         </script>
     </body>
