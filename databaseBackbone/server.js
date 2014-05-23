@@ -17,29 +17,7 @@ var express = require('express'),
             login : 'admin',
             password : 'admin',
             email : 'pas.ros.bor@gmail.com',
-            logIN : false,
-            tasks : [
-                {
-                    "order": 1,
-                    "title": "qweqwe",
-                    "done": false
-                },
-                {
-                    "order": 2,
-                    "title": "qweqwe",
-                    "done": false
-                },
-                {
-                    "order": 3,
-                    "title": "werwer",
-                    "done": false
-                },
-                {
-                    "order": 4,
-                    "title": "ertert",
-                    "done": false
-                }
-            ]
+            listOfTasks : null
         },
         function(){}
       );
@@ -49,29 +27,7 @@ var express = require('express'),
             login : 'IgorKo',
             password : 'igor123',
             email : 'IGOR@gmail.com',
-            logIN : false,
-            tasks : [
-                {
-                    "order": 1,
-                    "title": "123",
-                    "done": false
-                },
-                {
-                    "order": 2,
-                    "title": "321",
-                    "done": false
-                },
-                {
-                    "order": 3,
-                    "title": "234",
-                    "done": false
-                },
-                {
-                    "order": 4,
-                    "title": "234235345",
-                    "done": false
-                }
-            ]
+            listOfTasks : null
         },
         function(){}
       );
@@ -154,7 +110,7 @@ server.post('/islogin', function (req, res, next){
 /**
 * Updata status of  user by id
 */
-server.put('/user', function (req, res, next) {
+server.put('/user/:id', function (req, res, next) {
     userSave.update( req.params, function (error, user) {
             if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)));
             res.send(200, user);
@@ -164,7 +120,7 @@ server.put('/user', function (req, res, next) {
 /**
 *Delete  user by id
 */
-server.del('/user', function (req, res, next) {
+server.del('/user/:id', function (req, res, next) {
     userSave.delete( req.params.id, function (error, user) {
         if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
         res.send()
