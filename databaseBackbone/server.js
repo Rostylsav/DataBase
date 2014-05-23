@@ -20,24 +20,24 @@ var express = require('express'),
             logIN : false,
             tasks : [
                 {
-                    "id": 1,
-                    "task": "qweqwe",
-                    "status": false
+                    "order": 1,
+                    "title": "qweqwe",
+                    "done": false
                 },
                 {
-                    "id": 2,
-                    "task": "qweqwe",
-                    "status": false
+                    "order": 2,
+                    "title": "qweqwe",
+                    "done": false
                 },
                 {
-                    "id": 3,
-                    "task": "werwer",
-                    "status": false
+                    "order": 3,
+                    "title": "werwer",
+                    "done": false
                 },
                 {
-                    "id": 4,
-                    "task": "ertert",
-                    "status": false
+                    "order": 4,
+                    "title": "ertert",
+                    "done": false
                 }
             ]
         },
@@ -52,24 +52,24 @@ var express = require('express'),
             logIN : false,
             tasks : [
                 {
-                    "id": 1,
-                    "task": "123",
-                    "status": false
+                    "order": 1,
+                    "title": "123",
+                    "done": false
                 },
                 {
-                    "id": 2,
-                    "task": "321",
-                    "status": false
+                    "order": 2,
+                    "title": "321",
+                    "done": false
                 },
                 {
-                    "id": 3,
-                    "task": "234",
-                    "status": false
+                    "order": 3,
+                    "title": "234",
+                    "done": false
                 },
                 {
-                    "id": 4,
-                    "task": "234235345",
-                    "status": false
+                    "order": 4,
+                    "title": "234235345",
+                    "done": false
                 }
             ]
         },

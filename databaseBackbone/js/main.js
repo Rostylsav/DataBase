@@ -44,15 +44,14 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
                 events:{
                     'click #showTasks' : 'showTasks'
                 },
-                showTasks : function(){
-                    $('#continerForm').append(_.template($('#todo').html()));
-                    var appTodo = new AppViewTodo();
-
-                },
                 render: function() {
                     this.$el.append($(this.template(this.model)));
                     return this;
-                }
+                },
+                showTasks : function(){
+                    $('#continerForm').append(_.template($('#todo').html()));
+                    var appTodo = new AppViewTodo();
+                },
             });
 
             /*
@@ -131,7 +130,7 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
             /*
                 Global view.
             **/
-            var AppViewTodo = Backbone.View.extend({
+            var AppView = Backbone.View.extend({
                 el: $("#containerForUsers"),
                 events : {
                     "click #login"  : "login",
@@ -223,7 +222,7 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
                 }
             });
 
-            var AppView = Backbone.View.extend({
+            var AppViewTodo = Backbone.View.extend({
                 el: $("#containerForTodo"),
                 events: {
                     "keypress #newTask": "createOnEnter",
@@ -233,6 +232,7 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
                     "click #done": 'doneTasks'
                 },
                 initialize: function() {
+                    console.log('work');
                     this.input = this.$("#newTask");
                     this.allCheckbox = this.$("#chackAll")[0];
 
@@ -240,7 +240,7 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
                     tasksList.bind('all', this.render, this);
 
                     this.main = $('#containerForTasks');
-                    tasksList.fetch();
+                    
                 },
                 render: function() {
                     if (tasksList.length) {
