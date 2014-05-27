@@ -1,12 +1,13 @@
 require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage'], 
     function (logic){
-        var addForm,loginForm, listOfTasks, loginUserModel;
+        var addForm,loginForm, loginUserModel; 
         function error(text){
             if(text === 501){
-                console.log('This username is already using by another user.');
+
+               $('#myForm').find('input[name = "login"]').after('<label class = "error">This username is already using by another user.</label><br>');
             }
             if(text === 502){
-                console.log('Incorrectly entered password or login.');
+                loginForm.$el.find('input[name = "password"]').after('<label class = "error">Incorrectly entered password or login.</label><br>');
             }
             console.log('Error is :' + text);
         }
@@ -37,7 +38,7 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
             View for display table of users
         **/
         var UserDisplay = Backbone.View.extend({
-            tagName:  "tr",
+            tagName:  "tr", 
             template: _.template($('#tableRow').html()),
             events:{
                 'click #showTasks' : 'showTasks'
@@ -47,10 +48,8 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
                 return this;
             },
             showTasks : function(){
-                console.log(this.model.listOfTasks);
-                listOfTasks = new CollectionOfTasks();
-                if(this.model.listOfTasks != null){
-                    listOfTasks.add()
+                if(this.model.listOfTasks === null){
+                    loginUserModel.listOfTasks = new CollectionOfTasks();
                 }
                 var appToDo = new ToDoView();
             }
@@ -97,6 +96,8 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
             getLoginUser : function (users){
                 var  user = JSON.parse(users);
                 if(user.length){
+                    loginUserModel = user[0];
+
                     user.forEach(
                         function(obj){
                             var view = new UserDisplay({model: obj});
@@ -105,9 +106,11 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
                     );
                 }
                 else{
+                    loginUserModel = new UserModel(user);
                     var view = new UserDisplay({model: user});
                     $("#users").append(view.render().el);
-                }                        
+                }  
+                loginForm.remove();                      
             },
             login : function(e){
                 var that = this;
@@ -122,11 +125,10 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
                         data : JSON.stringify(user)
                     }
                 );
-                this.$el.html('');
             },
             cancel : function (e) {
                 e.preventDefault();
-                this.$el.html('');
+                loginForm.remove();
             }
         });
 
@@ -155,35 +157,19 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
             logout : function() {
                 $("#users").html('');
             }
-        });
+        }); 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        var index = 1;
+        var index = 1;  
 
         var TaskModel = Backbone.Model.extend({
             defaults: {
-                title: "Something to do...",
+                title: 'Something to do...',
                 order: index,
                 done: false
             },
             toggle: function() {
                 var that = this;
-                this.set("done", !(that.get('done')));
+                this.set('done', !(that.get('done')));
             },
             clear : function(){
                 this.destroy();
@@ -201,7 +187,7 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
         });
 
         var TaskDisplay = Backbone.View.extend({
-            tagName:  "div",
+            tagName:  'div',
             template: _.template($('#item-template').html()),
             events: {
                 "click .toggle"   : "toggleDone",
@@ -239,15 +225,15 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
                 this.input = this.$("#newTask");
                 this.allCheckbox = this.$("#chackAll")[0];
 
-                listOfTasks.bind('add', this.showTask, this);
-                listOfTasks.bind('all', this.render, this);
+                loginUserModel.listOfTasks.bind('add', this.showTask, this);
+                loginUserModel.listOfTasks.bind('all', this.render, this);
 
                 this.main = $('#containerForTasks');
             },
             render: function() {
-                if (listOfTasks.length) {
+                if (loginUserModel.listOfTasks.length) {
                     this.main.show();
-                    this.main.find('#countOfTasks').text('task to do ' + listOfTasks.remaining().length);
+                    this.main.find('#countOfTasks').text('task to do ' + loginUserModel.listOfTasks.remaining().length);
                 }
                 else {
                     this.main.hide();
@@ -260,14 +246,14 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
             createOnEnter: function(e) {
                 if (e.keyCode === 13){
                     if (this.input.val()) {
-                        listOfTasks.add({title: this.input.val()});
+                        loginUserModel.listOfTasks.add({title: this.input.val()});
                         this.input.val('');
                     }
                 }
             },
             chackAll: function () {
                 var done = this.allCheckbox.checked;
-                listOfTasks.forEach(function (task) { task.toggle();});
+                loginUserModel.listOfTasks.forEach(function (task) { task.toggle();});
             },
             displayAll: function(array){
                 var that = this;
@@ -279,17 +265,19 @@ require(['js/logic', 'jquery', 'underscore', 'backbone','backbone.localStorage']
                 );
             },
             allTasks: function(){
-                this.displayAll(listOfTasks.models);
+                this.displayAll(loginUserModel.listOfTasks.models);
             },
             activeTasks: function(){
-                this.displayAll(listOfTasks.remaining());
+                this.displayAll(loginUserModel.listOfTasks.remaining());
             },
             doneTasks: function(){
-                this.displayAll(listOfTasks.done());
-            }
+                this.displayAll(loginUserModel.listOfTasks.done());
+            },
 
             hideFormTodo: function(){
-
+                
+                
+                loginUserModel.save(this);
             }
         });
 
